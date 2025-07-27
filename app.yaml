@@ -1,6 +1,7 @@
 runtime: python310
 
-entrypoint: gunicorn -b :$PORT main:app
+entrypoint: gunicorn -b :$PORT main:app # Use gunicorn server for production
 
 automatic_scaling:
+  # Limit the resources our web app can use (to prevent runaway costs)
   max_instances: 1
