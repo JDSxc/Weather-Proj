@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from dataclasses import dataclass
 from weather_code_info import weather_code_desc
+from secrets_helper import get_api_key
 
 @dataclass
 class current_weather_data:
@@ -21,8 +22,7 @@ class forecast_data:
     descriptions: list[str]
     icons: str
 
-load_dotenv()
-api_key = os.getenv('API_KEY')
+api_key = get_api_key()
 
 def get_lat_long(city_name, state_code, country_name, api_key):
     resp = requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name},{state_code}"
@@ -51,7 +51,7 @@ def get_current_weather(lat, long):
 
 def get_forecast(lat, long):
     resp = requests.get(f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={long}&"
-    f"daily=temperature_2m_max,temperature_2m_min,weather_code&forecast_days=8&timezone=auto&f"
+    f"daily=temperature_2m_max,temperature_2m_min,weather_code&forecast_days=8&timezone=auto&"
     f"temperature_unit=fahrenheit").json()
 
     forecast_weather_codes = resp.get('daily').get('weather_code')

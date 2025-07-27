@@ -1,0 +1,35 @@
+import os
+from flask import Flask, request, render_template
+
+from weather import get_lat_long, get_current_weather, get_forecast
+from secrets_helper import get_api_key
+
+API_KEY = get_api_key()
+
+app = Flask(__name__)
+app.jinja_env.globals.update(zip=zip) # Allow use of zip() in our HTML templates
+
+@app.route("/")
+def show_weather():
+    # Default to San Antonio, if no GET args are provided
+    city = request.args.get("city", "San Antonio")
+    state = request.args.get("state", "Tx")
+    country = request.args.get("country", "United States")
+
+    lat, lon = get_lat_long(city, state, country, API_KEY)
+    current = get_current_weather(lat, lon)
+    forecast = get_forecast(lat, lon)
+
+    # Render the page template (Flask uses Jinja2)
+    return render_template(
+      "weather.html",
+      city=city,
+      state=state,
+      country=country,
+      current=current,
+      forecast=forecast
+    )
+
+# Run via the Flask development server if running main.py directly
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=8080, debug=True)

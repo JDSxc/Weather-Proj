@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather for {{ city }}, {{ state }}</title>
+</head>
+<body>
+  <h1>Current Weather in {{ city }}, {{ state }}</h1>
+  <p>Temperature: {{ current.temp }}°F</p>
+  <p>Wind: {{ current.windspeed }} mph</p>
+  <p>Condition: {{ current.description }}</p>
+
+  <h2>8-Day Forecast</h2>
+  <!-- 
+  zip() basically creates tuples from separate arrays, which lets
+  us treat each index across all four arrays in `forecast` as a
+  single logical object. i.e., treat dates[0], temps_min[0],
+  temps_max[0], and temps[descriptions] as logically related
+  -->
+  <ul>
+    {% for date, tmin, tmax, desc in
+          zip(forecast.dates,
+              forecast.temps_min,
+              forecast.temps_max,
+              forecast.descriptions) %}
+    <li>
+      <strong>{{ date }}</strong>:
+      {{ tmin }}°F - {{ tmax }}°F ({{ desc }})
+    </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
