@@ -23,7 +23,7 @@
             <div class="search-content">
               <input class="search-bar" id="searchInput" value="">
               <button class="clear" type="button" onclick="clearInput()">
-                <img src= "{{ url_for('static', filename='icon/clear.png') }}" alt="Clear">
+                <img src="icon/clear.png" alt="Clear">
               </button>
             </div>
             <button class="search-btn" type="submit">
@@ -45,7 +45,7 @@
       </div>
       <div class="status-row">
         <div class="status-label">Condition:</div>
-        <div class="status-value">{{ current.weather_description }}</div>
+        <div class="status-value">{{ current.description }}</div>
       </div>
       <div class="status-row">
         <div class="status-label">Humidity:</div>
@@ -53,7 +53,7 @@
       </div>
       <div class="status-row">
         <div class="status-label">Wind:</div>
-        <div class="status-value">{{ current.wind_speed }} mph</div>
+        <div class="status-value">{{ current.windspeed }} mph</div>
       </div>
       {% else %}
       <p>No weather data available.</p>
