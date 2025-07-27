@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Nimbus</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 
@@ -28,7 +28,7 @@
               </button>
             </div>
             <button class="search-btn" type="submit">
-              <img class="icon" src="icon/search.png" alt="Search">
+              <img class="icon" src="{{ url_for('static', filename='icon/search.png')}}" alt="Search">
             </button>
           </div>
         </form>
@@ -38,9 +38,40 @@
 
   <div class="body-content">
     <div class="left-panel">
-    <div class="current-status"> Current status </div>
+    <div class="current-status"> 
+      {% if current %}
+      <div class="status-row">
+        <div class="status-label">Temperature:</div>
+        <div class="status-value">{{ current.temp }}°F</div>
+      </div>
+      <div class="status-row">
+        <div class="status-label">Condition:</div>
+        <div class="status-value">{{ current.weather_description }}</div>
+      </div>
+      <div class="status-row">
+        <div class="status-label">Humidity:</div>
+        <div class="status-value">{{ current.humidity }}%</div>
+      </div>
+      <div class="status-row">
+        <div class="status-label">Wind:</div>
+        <div class="status-value">{{ current.wind_speed }} mph</div>
+      </div>
+      {% else %}
+      <p>No weather data available.</p>
+      {% endif %}
+    </div>
+
+
     <div class="weekdays">
-      prediction for weeksday
+      {% for date, max_temp, min_temp, desc, icon in zip(forecast.dates, forecast.temps_max, forecast.temps_min, forecast.descriptions, forecast.icons) %}
+        <div class="day-card">
+          <p><strong>{{ date }}</strong></p>
+          <img src="{{ icon }}" alt="icon" width="40">
+          <p>{{ desc }}</p>
+          <p>↑ {{ max_temp }}°F</p>
+          <p>↓ {{ min_temp }}°F</p>
+        </div>
+      {% endfor %}
     </div>
   </div>
   <div class="right-panel">

@@ -21,7 +21,7 @@ def show_weather():
     # This checks if lat or lon is returned based on city name input (Assuming state and country are always valid).
     if lat is None or lon is None:
         return render_template(
-                "weather.html",
+                "index.html",
                 city=city,
                 state=state,
                 country=country,
@@ -35,7 +35,7 @@ def show_weather():
 
     # Render the page template (Flask uses Jinja2)
     return render_template(
-      "weather.html",
+      "index.html",
       city=city,
       state=state,
       country=country,
