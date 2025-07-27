@@ -4,7 +4,7 @@ Defaults to San Antonio, TX, US, if no input is provided. Location and Weather d
 Powered by Google Cloud and Google App Engine.
 
 Set up and use the project:
-1. Create project folder
+1. Create project folder 
 2. Clone the repository into the project folder:
 ```git clone https://github.com/JDSxc/Weather-Proj.git```
 4. Create a virtual environment in PowerShell or CMD:
