@@ -17,15 +17,29 @@ def show_weather():
     country = request.args.get("country", "United States")
 
     lat, lon = get_lat_long(city, state, country, API_KEY)
+
+    # This checks if lat or lon is returned based on city name input (Assuming state and country are always valid).
+    if lat is None or lon is None:
+        return render_template(
+                "index.html",
+                city=city,
+                state=state,
+                country=country,
+                error=f"City not found: {city}",
+                current=None,
+                forecast=None
+        )
+
     current = get_current_weather(lat, lon)
     forecast = get_forecast(lat, lon)
 
     # Render the page template (Flask uses Jinja2)
     return render_template(
-      "weather.html",
+      "index.html",
       city=city,
       state=state,
       country=country,
+      error=None,
       current=current,
       forecast=forecast
     )

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nimbus</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+
+<body>
+    <nav class="nav-bar">
+    <ul>
+      <li>
+        <div>
+          <h1>Nimbus</h1>
+        </div>
+      </li>
+      <li>
+        <div><h2> Time</h2></div>
+      </li>
+      <li>
+        <form>
+          <div class="search-container">
+            <div class="search-content">
+              <input class="search-bar" id="searchInput" value="Value">
+              <button class="clear" type="button" onclick="clearInput()">
+                <img src="icon/clear.png" alt="Clear">
+              </button>
+            </div>
+            <button class="search-btn" type="submit">
+              <img class="icon" src="{{ url_for('static', filename='icon/search.png')}}" alt="Search">
+            </button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="body-content">
+    <div class="left-panel">
+    <div class="current-status"> 
+      {% if current %}
+      <div class="status-row">
+        <div class="status-label">Temperature:</div>
+        <div class="status-value">{{ current.temp }}°F</div>
+      </div>
+      <div class="status-row">
+        <div class="status-label">Condition:</div>
+        <div class="status-value">{{ current.weather_description }}</div>
+      </div>
+      <div class="status-row">
+        <div class="status-label">Humidity:</div>
+        <div class="status-value">{{ current.humidity }}%</div>
+      </div>
+      <div class="status-row">
+        <div class="status-label">Wind:</div>
+        <div class="status-value">{{ current.wind_speed }} mph</div>
+      </div>
+      {% else %}
+      <p>No weather data available.</p>
+      {% endif %}
+    </div>
+
+
+    <div class="weekdays">
+      {% for date, max_temp, min_temp, desc, icon in zip(forecast.dates, forecast.temps_max, forecast.temps_min, forecast.descriptions, forecast.icons) %}
+        <div class="day-card">
+          <p><strong>{{ date }}</strong></p>
+          <img src="{{ icon }}" alt="icon" width="40">
+          <p>{{ desc }}</p>
+          <p>↑ {{ max_temp }}°F</p>
+          <p>↓ {{ min_temp }}°F</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="graph"> graph</div>
+  </div>
+  </div>
+  
+
+
+  <!--
+  
+  <div class="panel">
+    <img class="background-img" src="background/cloudy.png" alt="">
+  </div>
+  -->
+  <script>
+    function clearInput() {
+      document.getElementById("searchInput").value = "";
+    }
+  </script>
+</body>
+</html>
