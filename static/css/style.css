@@ -204,3 +204,25 @@ background-color: #ff9a8b;
 width: 30px;
 height: 30px;
 }
+
+.site-name-logo{
+  display: flex;
+  justify-content: center;
+}
+.site-name-logo a{
+  text-decoration: none;
+  display:flex;
+  color:#5d98b6;
+  z-index: 10;
+}
+
+
+.site-name-logo a:hover{
+  color:#ff9a8b;
+}
+
+.site-name-logo img{
+  max-width: 100px;
+  max-height: 100px;
+  z-index: 0;
+}
