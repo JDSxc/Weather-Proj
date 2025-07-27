@@ -6,24 +6,56 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
+
 <body>
+    <nav class="nav-bar">
+    <ul>
+      <li>
+        <div>
+          <h1>Nimbus</h1>
+        </div>
+      </li>
+      <li>
+        <div><h2> Time</h2></div>
+      </li>
+      <li>
+        <form>
+          <div class="search-container">
+            <div class="search-content">
+              <input class="search-bar" id="searchInput" value="Value">
+              <button class="clear" type="button" onclick="clearInput()">
+                <img src="icon/clear.png" alt="Clear">
+              </button>
+            </div>
+            <button class="search-btn" type="submit">
+              <img class="icon" src="icon/search.png" alt="Search">
+            </button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="body-content">
+    <div class="left-panel">
+    <div class="current-status"> Current status </div>
+    <div class="weekdays">
+      prediction for weeksday
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="graph"> graph</div>
+  </div>
+  </div>
+  
+
+
+  <!--
+  
   <div class="panel">
     <img class="background-img" src="background/cloudy.png" alt="">
-    <form>
-      <div class="search-container">
-        <div class="search-content">
-          <input class="search-bar" id="searchInput" value="Value">
-          <button class="clear" type="button" onclick="clearInput()">
-            <img src="icon/clear.png" alt="Clear">
-          </button>
-        </div>
-        <button class="search-btn" type="submit">
-          <img class="icon" src="icon/search.png" alt="Search">
-        </button>
-      </div>
-    </form>
   </div>
-
+  -->
   <script>
     function clearInput() {
       document.getElementById("searchInput").value = "";
