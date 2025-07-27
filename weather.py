@@ -79,7 +79,7 @@ def get_icon(weather_code: int, extension="png") -> str:
 
 # Main
 def main(city_name, state_code, country_name):
-    lat, long = get_lat_lon(city_name, state_code, country_name, api_key)
+    lat, long = get_lat_long(city_name, state_code, country_name, api_key)
     current_weather_data = get_current_weather(lat, long)
     forecast_data = get_forecast(lat, long)
     return current_weather_data, forecast_data
