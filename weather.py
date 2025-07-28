@@ -85,6 +85,9 @@ def get_forecast(lat, long):
 def get_icon(weather_code: int, extension="png") -> str:
     return f"static/icons/{weather_code}.{extension}"
 
+
+
+
 # Main
 def main(city_name, state_code, country_name):
     lat, long = get_lat_long(city_name, state_code, country_name, api_key)

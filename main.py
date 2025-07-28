@@ -1,8 +1,11 @@
+import os
+from AI_helper import groqValidateInput
 from flask import Flask, request, render_template
 
 from weather import get_lat_long, get_current_weather, get_forecast
 from secrets_helper import get_api_key
 from datetime import datetime
+import json
 
 API_KEY = get_api_key()
 
@@ -16,6 +19,15 @@ def show_weather():
     state = request.args.get("state", "TX").upper()
     country = request.args.get("country", "United States").title() 
 
+    if request.args.get("searchInput") is None:
+        True
+    else:
+        jsonString = groqValidateInput(request.args.get("searchInput"))
+        parsed = json.loads(jsonString)
+        city = parsed['city']
+        state = parsed['state']
+        country = parsed["country"]
+    
     lat, lon = get_lat_long(city, state, country, API_KEY)
 
     current_date = datetime.now().strftime("%A - %B %d, %Y") # i.e., format as Monday - July 27, 2025

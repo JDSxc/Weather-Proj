@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Nimbus</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 
 <body>
@@ -12,19 +11,22 @@
     <ul>
       <li>
         <div>
-          <h1>Nimbus</h1>
+          <div class="site-name-logo"><a class="" href="{{url_for('show_weather')}}"><img class="site-name-logo" src="{{url_for('static', filename='project-logo/logo.png')}}"><h1>Nimbus</h1></a></div>
         </div>
       </li>
       <li>
-        <div><h2>{{ current_date }}</h2></div>
+        <div><h2>Weather in {{ city }}
+          {% if state %}, {{ state }}{% endif %}
+          {% if country %}, {{ country }}{% endif %}
+        </h2></div>
       </li>
       <li>
-        <form>
+        <form method="get" action="/">
           <div class="search-container">
             <div class="search-content">
-              <input class="search-bar" id="searchInput" value="Value">
+              <input class="search-bar" id="searchInput" name="searchInput" placeholder="Please Enter the location" required>
               <button class="clear" type="button" onclick="clearInput()">
-                <img src="{{ url_for('static', filename='icon/clear.png')}}" alt="Clear">
+                <img src= "{{ url_for('static', filename='icon/clear.png') }}" alt="Clear">
               </button>
             </div>
             <button class="search-btn" type="submit">
