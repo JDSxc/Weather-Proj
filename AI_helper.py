@@ -16,10 +16,12 @@ def groqValidateInput(prompt):
         "messages": [
             {
                 "role": "system", 
-                "content": "Given a short location input like 'hcmc vn' or 'austin texas us', "
-    "return ONLY valid JSON with keys: city, state, country. "
-    "You MUST validate that the city actually exists in that state and country. "
-    "If it's invalid or does not exist in the given country/state, reply with: "
+                "content": "Given a short location input like 'hcmc vn' or 'austin texas us' or 'Los Angeles, "
+                "If you are given a city name, within your best knowledge return it with the correct JSON format"
+                "If multiple city match, return your first match"
+                "return ONLY valid JSON with keys: city, state, country. "
+                "You MUST validate that the city actually exists in that state and country. "
+                "If it's invalid or does not exist in the given country/state, reply with: "
     "{\"Error\": \"invalid input\"}"
                 },
             {
@@ -32,3 +34,4 @@ def groqValidateInput(prompt):
     response = requests.post(url, headers=headers, json=body)
     content= response.json()['choices'][0]['message']['content']
     return content
+#print(groqValidateInput("San Antonio"))
