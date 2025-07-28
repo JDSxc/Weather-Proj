@@ -1,4 +1,3 @@
-import os
 from AI_helper import groqValidateInput
 from flask import Flask, request, render_template
 
