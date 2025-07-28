@@ -6,7 +6,7 @@ from secrets_helper import get_api_key
 from datetime import datetime
 import json
 
-API_KEY = get_api_key()
+OWM_API_KEY = get_api_key("OWM_API_KEY")
 
 app = Flask(__name__)
 app.jinja_env.globals.update(zip=zip) # Allow use of zip() in our HTML templates
@@ -27,7 +27,7 @@ def show_weather():
         state = parsed['state']
         country = parsed["country"]
     
-    lat, lon = get_lat_long(city, state, country, API_KEY)
+    lat, lon = get_lat_long(city, state, country, OWM_API_KEY)
 
     current_date = datetime.now().strftime("%A - %B %d, %Y") # i.e., format as Monday - July 27, 2025
 
