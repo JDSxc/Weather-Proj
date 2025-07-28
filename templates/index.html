@@ -15,13 +15,16 @@
         </div>
       </li>
       <li>
-        <div><h2>Weather in {{city}} , {{state}}</h2></div>
+        <div><h2>Weather in {{ city }}
+          {% if state %}, {{ state }}{% endif %}
+          {% if country %}, {{ country }}{% endif %}
+        </h2></div>
       </li>
       <li>
-        <form>
+        <form method="get" action="/">
           <div class="search-container">
             <div class="search-content">
-              <input class="search-bar" id="searchInput" value="">
+              <input class="search-bar" id="searchInput" name="searchInput" placeholder="Please Enter the location" required>
               <button class="clear" type="button" onclick="clearInput()">
                 <img src= "{{ url_for('static', filename='icon/clear.png') }}" alt="Clear">
               </button>

@@ -1,8 +1,10 @@
 import os
+from AI_helper import groqValidateInput
 from flask import Flask, request, render_template
 
 from weather import get_lat_long, get_current_weather, get_forecast
 from secrets_helper import get_api_key
+import json
 
 API_KEY = get_api_key()
 
@@ -15,7 +17,25 @@ def show_weather():
     city = request.args.get("city", "San Antonio")
     state = request.args.get("state", "Tx")
     country = request.args.get("country", "United States")
+    if request.args.get("searchInput") is None:
+        True
+    else:
+        jsonString = groqValidateInput(request.args.get("searchInput"))
+        parsed = json.loads(jsonString)
+        city = parsed['city']
+        state = parsed['state']
+        country = parsed["country"]
+    
+    
 
+
+    """
+
+    
+    city = request.args.get("city", "San Antonio")
+    state = request.args.get("state", "Tx")
+    country = request.args.get("country", "United States")
+    """
     lat, lon = get_lat_long(city, state, country, API_KEY)
 
     # This checks if lat or lon is returned based on city name input (Assuming state and country are always valid).
