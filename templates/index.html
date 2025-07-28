@@ -18,7 +18,9 @@
         <div><h2>Weather in {{ city }}
           {% if state %}, {{ state }}{% endif %}
           {% if country %}, {{ country }}{% endif %}
-        </h2></div>
+
+        </h2>
+      <p> Current time:{{ current.timezone }}</p></div>
       </li>
       <li>
         <form method="get" action="/">

@@ -12,6 +12,8 @@ class current_weather_data:
     weathercode: int
     description: str
     icon: str
+    timezone: str
+    humidity: float
 
 @dataclass
 class forecast_data:
@@ -39,17 +41,25 @@ def get_lat_long(city_name, state_code, country_name, api_key):
 
 # This function will get current weather information based on lat and long.
 def get_current_weather(lat, long):
-    resp = requests.get(f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={long}&"
-    f"current_weather=true&timezone=auto&temperature_unit=fahrenheit&wind_speed_unit=mph").json()
+    resp = requests.get(
+        f"https://api.open-meteo.com/v1/forecast?"
+        f"latitude={lat}&longitude={long}&"
+        f"current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&"
+        f"timezone=auto&temperature_unit=fahrenheit&wind_speed_unit=mph"
+    ).json()
 
-    current_weather_code = resp.get('current_weather').get('weathercode')
+    current = resp['current']
+
+    current_weather_code = current['weather_code']
 
     data = current_weather_data(
-            temp=resp.get('current_weather').get('temperature'),
-            windspeed=resp.get('current_weather').get('windspeed'),
-            weathercode=current_weather_code,
-            description=weather_code_desc.get(current_weather_code, 'Unknown'),
-            icon=get_icon(current_weather_code)
+        temp=current['temperature_2m'],
+        windspeed=current['wind_speed_10m'],
+        weathercode=current_weather_code,
+        description=weather_code_desc.get(current_weather_code, 'Unknown'),
+        icon=get_icon(current_weather_code),
+        timezone=resp['timezone'],
+        humidity=current['relative_humidity_2m']
     )
 
     return data
