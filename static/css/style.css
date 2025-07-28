@@ -65,6 +65,10 @@ body {
     gap: 15px;
 }
 
+.status-label {
+  font-weight: bold;
+}
+
 .graph {
     width: 80%;
     min-height: 40%;
@@ -75,6 +79,7 @@ body {
     box-shadow: 0 0 10px #ccc;
     overflow: hidden;
 }
+
 .weekdays {
     display: flex;
     flex-direction: row;
