@@ -1,10 +1,9 @@
-import os
 import requests
-from dotenv import load_dotenv
+from secrets_helper import get_api_key
 #from groq import Groq
 
-load_dotenv()
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_API_KEY = get_api_key("GROQ_API_KEY")
+
 def groqValidateInput(prompt):
     url = "https://api.groq.com/openai/v1/chat/completions"
     model="llama3-70b-8192"
