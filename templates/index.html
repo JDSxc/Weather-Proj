@@ -95,8 +95,9 @@
 
     <div class="weekdays">
       {% for date, max_temp, min_temp, desc, icon in zip(forecast.dates, forecast.temps_max, forecast.temps_min, forecast.descriptions, forecast.icons) %}
-        <div class="day-card">
+        <div class="card">
           <p><strong>{{ date }}</strong></p>
+          <hr styles="width:1px;height:100px;"></hr>
           <img src="{{ icon }}" alt="icon" width="40">
           <p>{{ desc }}</p>
           <p>↑ {{ max_temp }}°F</p>
