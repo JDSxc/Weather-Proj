@@ -11,7 +11,7 @@ OWM_API_KEY = get_api_key("OWM_API_KEY")
 app = Flask(__name__)
 app.jinja_env.globals.update(zip=zip) # Allow use of zip() in our HTML templates
 ## create cache data to temporary store data also set the default value
-cached_data={
+cached_data={ # Default to San Antonio, if no GET args are provided
     'city':"San Antonio",
     'state': 'TX',
     'country' : "United States",
@@ -22,59 +22,35 @@ cached_data={
 @app.route("/")
 def show_weather():
     current_date = datetime.now().strftime("%A - %B %d, %Y") # i.e., format as Monday - July 27, 2025
-    # Default to San Antonio, if no GET args are provided, ok i might need to figure out how to work around this one
-    """
-    city = cached_data['city'] = request.args.get("city", "San Antonio").title() # Normalize capitalization
-    state= cached_data['state'] = request.args.get("state", "TX").upper()
-    country =cached_data['country'] = request.args.get("country", "United States").title() 
-    """
+    error = None
+
     city = cached_data['city'] 
     state = cached_data['state'] 
     country = cached_data['country']
+    current = cached_data['current']
+    forecast = cached_data['forecast']
 
+    if request.args.get("searchInput"): # If we have an arg for searchInput in URL...
+        jsonString = groqValidateInput(request.args.get("searchInput")) # Have Groq validate it, returning results as JSON
+        parsed = json.loads(jsonString) # Convert that JSON into a Python Object
+
+        if 'Error' in parsed: # If Groq returned an error...
+            # Set error to an error message
+            error = "We could not match your input to a valid location. Please try again using city, state (if applicable), and country."
+        else: # Load the results for City, State, and Country from Groq
+            city = cached_data['city'] = parsed['city']
+            state = cached_data['state'] = parsed['state']
+            country = cached_data['country']= parsed["country"]
     
-    if request.args.get("searchInput") is None:
-        True
-    else:
-        print(request.args.get("searchInput"))
-        jsonString = groqValidateInput(request.args.get("searchInput"))
-        parsed = json.loads(jsonString)
-        if 'Error' in parsed:
-            print(parsed)
-            return render_template(
-                "index.html",
-                city = cached_data['city'],
-                state = cached_data['state'],
-                country = cached_data['country'],
-                error = "We could not match your input to a real location. Please try again using city, states or/and country",
-                current = cached_data['current'],
-                forecast = cached_data['forecast'],
-                current_date = current_date
-            )
-        
-        city = cached_data['city'] = parsed['city']
-        state = cached_data['state'] = parsed['state']
-        country = cached_data['country']= parsed["country"]
-    
-    lat, lon = get_lat_long(city, state, country, OWM_API_KEY)
+    if error is None: # Groq input validation was successful
+        lat, lon = get_lat_long(city, state, country, OWM_API_KEY) # Get latitude and longitude of the location
 
-
-    # This checks if lat or lon is returned based on city name input (Assuming state and country are always valid).
-    if lat is None or lon is None:
-        return render_template(
-                "index.html",
-                city = city,
-                state = state,
-                country = country,
-                error = f"City not found: {city}",
-                current = None,
-                forecast = None,
-                current_date = current_date
-        )
-
-    current = cached_data['current'] = get_current_weather(lat, lon)
-    forecast = cached_data['forecast'] = get_forecast(lat, lon)
-
+        if lat is None or lon is None: # If OWM API returns an error...
+            # Set error
+            error = f"City not found: {city}"
+        else: # Use lat/lon to get current weather and forecast from Open-Meteo API
+            current = cached_data['current'] = get_current_weather(lat, lon)
+            forecast = cached_data['forecast'] = get_forecast(lat, lon)
     
     # Render the page template (Flask uses Jinja2)
     return render_template(
@@ -82,10 +58,10 @@ def show_weather():
       city = city,
       state = state,
       country = country,
-      error = None,
+      error = error,
       current = current,
       forecast = forecast,
-      current_date = current_date
+      current_date = current_date # Will swap this out later to match time at the inputted location
     )
 
 # Run via the Flask development server if running main.py directly
