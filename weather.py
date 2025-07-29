@@ -107,7 +107,7 @@ def main(city_name, state_code, country_name):
 
 # This is for just testing weather.py
 if __name__ == "__main__":
-    lat, long = get_lat_long('San Antonio', 'TX', 'United States', OWM_API_KEY)
+    lat, long = get_lat_long('San Antonio', 'Texas', 'United States', OWM_API_KEY)
     current_weather_data = get_current_weather(lat, long)
     forecast_data = get_forecast(lat, long)
     print(current_weather_data)
