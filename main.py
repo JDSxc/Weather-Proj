@@ -29,8 +29,8 @@ def show_weather():
     country =cached_data['country'] = request.args.get("country", "United States").title() 
     """
     city = cached_data['city'] 
-    state= cached_data['state'] 
-    country =cached_data['country']
+    state = cached_data['state'] 
+    country = cached_data['country']
 
     
     if request.args.get("searchInput") is None:
@@ -43,14 +43,15 @@ def show_weather():
             print(parsed)
             return render_template(
                 "index.html",
-                city=cached_data['city'],
-                state=cached_data['state'],
-                country=cached_data['country'],
-                error="We could not match your input to a real location. Please try again using city, states or/and country",
-                current=cached_data['current'],
-                forecast=cached_data['forecast'],
-                current_date=current_date
-        )
+                city = cached_data['city'],
+                state = cached_data['state'],
+                country = cached_data['country'],
+                error = "We could not match your input to a real location. Please try again using city, states or/and country",
+                current = cached_data['current'],
+                forecast = cached_data['forecast'],
+                current_date = current_date
+            )
+        
         city = cached_data['city'] = parsed['city']
         state = cached_data['state'] = parsed['state']
         country = cached_data['country']= parsed["country"]
@@ -58,18 +59,17 @@ def show_weather():
     lat, lon = get_lat_long(city, state, country, OWM_API_KEY)
 
 
-    
     # This checks if lat or lon is returned based on city name input (Assuming state and country are always valid).
     if lat is None or lon is None:
         return render_template(
                 "index.html",
-                city=city,
-                state=state,
-                country=country,
-                error=f"City not found: {city}",
-                current=None,
-                forecast=None,
-                current_date=current_date
+                city = city,
+                state = state,
+                country = country,
+                error = f"City not found: {city}",
+                current = None,
+                forecast = None,
+                current_date = current_date
         )
 
     current = cached_data['current'] = get_current_weather(lat, lon)
@@ -79,13 +79,13 @@ def show_weather():
     # Render the page template (Flask uses Jinja2)
     return render_template(
       "index.html",
-      city=city,
-      state=state,
-      country=country,
-      error=None,
-      current=current,
-      forecast=forecast,
-      current_date=current_date
+      city = city,
+      state = state,
+      country = country,
+      error = None,
+      current = current,
+      forecast = forecast,
+      current_date = current_date
     )
 
 # Run via the Flask development server if running main.py directly

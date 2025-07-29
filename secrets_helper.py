@@ -17,7 +17,7 @@ def get_secret(secret_id):
 
 # If we're operating in Google App Engine Standard, then retrieve the
 # API key via the secrets manager (only Service account has permission).
-# Otherwise, retrieve the API via local .env file (which doesn't work
+# Otherwise, retrieve the API key via local .env file (which doesn't work
 # with Google App Engine)
 def get_api_key(API_KEY):
     if os.getenv('GAE_ENV', '').startswith('standard'):

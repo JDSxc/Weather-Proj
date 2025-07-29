@@ -40,6 +40,12 @@
       </li>
     </ul>
   </nav>
+  
+  {% if error %}
+  <div class="error-banner">
+    <p>{{ error }}</p>
+  </div>
+  {% endif %}
 
   <div class="body-content">
     <div class="left-panel">
