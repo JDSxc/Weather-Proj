@@ -5,6 +5,7 @@ from weather import get_lat_long, get_current_weather, get_forecast
 from secrets_helper import get_api_key
 from datetime import datetime
 import json
+import pytz
 
 OWM_API_KEY = get_api_key("OWM_API_KEY")
 
@@ -17,11 +18,11 @@ cached_data={ # Default to San Antonio, if no GET args are provided
     'country' : "United States",
     'current': None,
     'forecast': None,
+    'timezone': None
 }
 
 @app.route("/")
 def show_weather():
-    current_date = datetime.now().strftime("%A - %B %d, %Y") # i.e., format as Monday - July 27, 2025
     error = None
 
     city = cached_data['city'] 
@@ -41,9 +42,9 @@ def show_weather():
             parsed_state = parsed['state'].title()
             parsed_country = parsed['country'].title()
             print(f"Groq successfully validated searchInput\n"
-                  f"   parsed_city: '{parsed_city}'\n" 
-                  f"   parsed_sate: '{parsed_state}'\n" 
-                  f"   parsed_country: '{parsed_country}'\n")
+                  f"  parsed_city: '{parsed_city}'\n" 
+                  f"  parsed_sate: '{parsed_state}'\n" 
+                  f"  parsed_country: '{parsed_country}'\n")
 
             if ( # Only update the cache data if the user's input is different
                 parsed_city != cached_data['city'] or
@@ -57,9 +58,9 @@ def show_weather():
                 cached_data['current'] = None  # Invalidate the old data
                 cached_data['forecast'] = None
                 print(f"Cached data updated.\n" 
-                      f"   city: '{city}'\n"
-                      f"   state: '{state}'\n" 
-                      f"   country: '{country}'\n")
+                      f"  city: '{city}'\n"
+                      f"  state: '{state}'\n" 
+                      f"  country: '{country}'\n")
             else: # User submitted the same location, reuse existing data
                 print("Using previously cached data for City/State/Country\n")
                 city = cached_data['city']
@@ -81,8 +82,15 @@ def show_weather():
             cached_data['current'] = get_current_weather(lat, lon)
             cached_data['forecast'] = get_forecast(lat, lon)
 
+            print("Converting Open-Meteo timezone response to datetime object\n")
+            timezone_str = cached_data['current'].timezone
+            cached_data['timezone'] = pytz.timezone(timezone_str)
+
     current = cached_data['current']
     forecast = cached_data['forecast']
+    local_time = datetime.now(cached_data['timezone']).strftime("%I:%M %p") # Format as 3:00 PM
+
+    print(f"Local time in {city}: {local_time}\n")
     
     # Render the page template (Flask uses Jinja2)
     return render_template(
@@ -93,7 +101,7 @@ def show_weather():
       error = error,
       current = current,
       forecast = forecast,
-      current_date = current_date # Will swap this out later to match time at the inputted location
+      local_time = local_time
     )
 
 # Run via the Flask development server if running main.py directly
