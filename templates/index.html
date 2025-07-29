@@ -17,18 +17,18 @@
         </div>
       </li>
       <li>
-        <div><h2>Weather in {{ city }}
-          {% if state %}, {{ state }}{% endif %}
-          {% if country %}, {{ country }}{% endif %}
+        <div><h2>Weather in {{ city }},
+          {% if state %} {{ state }},{% endif %}
+          {% if country %} {{ country }}{% endif %}
 
         </h2>
-      <p> Current time:{{ current.timezone }}</p></div>
+      <p> Current time: {{ current.timezone }}</p></div>
       </li>
       <li>
         <form method="get" action="/">
           <div class="search-container">
             <div class="search-content">
-              <input class="search-bar" id="searchInput" name="searchInput" placeholder="Please Enter the location" required>
+              <input class="search-bar" id="searchInput" name="searchInput" placeholder="Please enter the location" required>
               <button class="clear" type="button" onclick="clearInput()">
                 <img src= "{{ url_for('static', filename='icon/clear.png') }}" alt="Clear">
               </button>
@@ -41,6 +41,12 @@
       </li>
     </ul>
   </nav>
+  
+  {% if error %}
+  <div class="error-banner">
+    <p>{{ error }}</p>
+  </div>
+  {% endif %}
 
   <div class="body-content">
     <div class="left-panel">

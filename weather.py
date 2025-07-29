@@ -71,7 +71,7 @@ def get_forecast(lat, long):
     f"temperature_unit=fahrenheit").json()
 
     forecast_weather_codes = resp.get('daily').get('weather_code')
-    raw_dates = resp.get('daily').get('time') # Gets date in 2025-07-27
+    raw_dates = resp.get('daily').get('time') # Gets date in 2025-07-27 format
  
     # Convert from '2025-07-27' to 'Sun 7/27' for all 8 days using list comprehension
     formatted_dates = [
@@ -107,7 +107,7 @@ def main(city_name, state_code, country_name):
 
 # This is for just testing weather.py
 if __name__ == "__main__":
-    lat, long = get_lat_long('San Antonio', 'TX', 'United States', OWM_API_KEY)
+    lat, long = get_lat_long('San Antonio', 'Texas', 'United States', OWM_API_KEY)
     current_weather_data = get_current_weather(lat, long)
     forecast_data = get_forecast(lat, long)
     print(current_weather_data)

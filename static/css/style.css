@@ -253,6 +253,17 @@ height: 30px;
   z-index: 0;
 }
 
+
+.error-banner {
+  background-color: #ffe0e0;
+  color: #a80000;
+  padding: 12px;
+  margin: 10px;
+  border: 1px solid #ffaaaa;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
 .card{
   margin: 10px;
   background-color:rgb(181, 206, 228);
