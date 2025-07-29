@@ -6,6 +6,7 @@
   <link rel="shortcut icon" type="image/icon" href="{{url_for('static', filename='project-logo/logo.png')}}"/>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+{% set desc = current.description | lower %}
 
 <body>
     <nav class="nav-bar">
@@ -43,24 +44,43 @@
 
   <div class="body-content">
     <div class="left-panel">
-    <div class="current-status"> 
+    <div class="current-status
+  {% if 'storm' in desc %}
+    storm-theme
+  {% elif 'overcast' in desc or 'cloud' in desc %}
+    overcast-theme
+  {% elif 'clearsky' in desc or 'clear sky' in desc %}
+    clearsky-theme
+  {% elif 'rain' in desc or 'drizzle' in desc %}
+      rain-theme
+  {% else %}
+    none
+  {% endif %}">
+
+
+ 
       {% if current %}
-      <div class="status-row">
-        <div class="status-label">Temperature:</div>
-        <div class="status-value">{{ current.temp }}°F</div>
+      <div class="row">
+        <div class="card">
+          <div class="card-label">Temperature:</div>
+          <div class="card-value">{{ current.temp }}°F <img src="{{ url_for('static', filename='icons/hot.png')}}"></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Condition:</div>
+          <div class="card-value">{{ current.description }}</div>
+        </div>
       </div>
-      <div class="status-row">
-        <div class="status-label">Condition:</div>
-        <div class="status-value">{{ current.description }}</div>
+      <div class="row">
+        <div class="card">
+          <div class="card-label">Humidity:</div>
+          <div class="card-value">{{ current.humidity }}%</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Wind:</div>
+          <div class="card-value">{{ current.windspeed }} mph</div>
+        </div>
       </div>
-      <div class="status-row">
-        <div class="status-label">Humidity:</div>
-        <div class="status-value">{{ current.humidity }}%</div>
-      </div>
-      <div class="status-row">
-        <div class="status-label">Wind:</div>
-        <div class="status-value">{{ current.windspeed }} mph</div>
-      </div>
+      
       {% else %}
       <p>No weather data available.</p>
       {% endif %}

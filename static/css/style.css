@@ -1,11 +1,32 @@
 body {
     margin: 0;
     height: 100vh;
-    background-color: #b2defb;
+    background-color: hsl(204, 73%, 86%);
 
     font-family: sans-serif;
 }
 
+.cloud-theme{
+  background-image: url("../background/cloud-theme.png");
+  background-position: center;
+}
+.overcast-theme{
+  background-image: url("../background/overcast.png");
+  background-position: center;
+}
+.clearsky-theme{
+  background-image: url("../background/clear-sky@2x.png");
+  background-position: top right;
+  background-size:auto;
+}
+.storm-theme{
+  background-image: url("../background/storm@2x.png");
+  background-position: center;
+}
+.rain-theme{
+  background-image: url("../background/rain@2x.png");
+  
+}
 .nav-bar ul{
     display:flex;
     justify-content: space-between;
@@ -54,7 +75,7 @@ body {
 }
 
 .current-status {
-    background-color: #ffffffcc; 
+    /*background-color: #ffffffcc; */
     padding: 20px;
     border-radius: 10px;
     margin: 10%;
@@ -65,7 +86,7 @@ body {
     gap: 15px;
 }
 
-.status-label {
+.card-label {
   font-weight: bold;
 }
 
@@ -230,4 +251,36 @@ height: 30px;
   max-width: 100px;
   max-height: 100px;
   z-index: 0;
+}
+
+.card{
+  margin: 10px;
+  background-color:rgb(181, 206, 228);
+  backdrop-filter: blur(10px);
+}
+
+.current-status{
+  display:flex;
+}
+.current-status:hover {
+  transform: scale(1.1);
+  transition:0.4s;
+
+}
+.row{
+  display:flex;
+  justify-content: space-evenly;
+}
+.current-status .card{
+  min-width: 40%;
+  width:auto;
+  border-radius: 10px;
+  padding:10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+}
+.current-status .card:hover{
+  transform: scale(1.1);
+  transition:0.3s;
+
 }
