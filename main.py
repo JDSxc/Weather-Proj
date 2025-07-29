@@ -31,6 +31,7 @@ def show_weather():
     if request.args.get("searchInput"): # If we have an arg for searchInput in URL...
         jsonString = groqValidateInput(request.args.get("searchInput")) # Have Groq validate it, returning results as JSON
         parsed = json.loads(jsonString) # Convert that JSON into a Python Object
+        print("GROQ: jsonString =", repr(jsonString))
 
         if 'Error' in parsed: # If Groq returned an error...
             print("Groq returned an error while attempting to validate searchInput\n")
