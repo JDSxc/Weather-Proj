@@ -120,7 +120,7 @@ def show_weather():
 
 @app.route("/graph")
 def serve_graph():
-    return send_file("./tmp/graph/graph.png", mimetype="image/png")
+    return send_file("/tmp/graph/graph.png", mimetype="image/png")
 
 # Run via the Flask development server if running main.py directly
 if __name__ == "__main__":
