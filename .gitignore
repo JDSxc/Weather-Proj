@@ -1,5 +1,5 @@
 .env
 __pycache__
 venv
-static/graph/graph.png
+graph.png
    
