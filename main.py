@@ -24,7 +24,6 @@ cached_data={ # Default to San Antonio, if no GET args are provided
 
 @app.route("/")
 def show_weather():
-    current_date = datetime.now().strftime("%A - %B %d, %Y") # i.e., format as Monday - July 27, 2025
     error = None
 
     city = cached_data['city'] 
@@ -44,9 +43,6 @@ def show_weather():
             parsed_state = parsed['state'].title()
             parsed_country = parsed['country'].title()
             print(f"Groq successfully validated searchInput\n"
-                  f"   parsed_city: '{parsed_city}'\n" 
-                  f"   parsed_sate: '{parsed_state}'\n" 
-                  f"   parsed_country: '{parsed_country}'\n")
                   f"  parsed_city: '{parsed_city}'\n" 
                   f"  parsed_sate: '{parsed_state}'\n" 
                   f"  parsed_country: '{parsed_country}'\n")
