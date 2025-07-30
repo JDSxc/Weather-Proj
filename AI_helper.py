@@ -17,10 +17,10 @@ def groqValidateInput(prompt):
             {
                 "role": "system", 
                 "content": "Given a short location input like 'hcmc vn' or 'austin texas us' or 'Los Angeles', "
-                "If you are given a city name, within your best knowledge return it with the correct JSON format"
-                "If multiple cities match, return your first match"
-                "Return ONLY valid JSON with ONLY the following keys: city, state, country. "
-                "Use the full name for city, state, and country. "
+                "If you are given a city name, within your best knowledge return it with the correct JSON format "
+                "If multiple cities match, return your first match. "
+                "Return ONLY valid JSON with EXACTLY the following keys: city, state, country. "
+                "Use the full name for city, state, and country. If state is not applicable, make it blank. "
                 "You MUST validate that the city actually exists in that state and country. "
                 "If it's invalid or does not exist in the given country/state, reply ONLY with: "
                 "{\"Error\": \"invalid input\"}"
