@@ -5,3 +5,4 @@ gunicorn
 google-cloud-secret-manager
 pytz
 matplotlib
+plotly
