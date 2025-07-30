@@ -3,6 +3,7 @@ from flask import Flask, request, render_template
 
 from weather import get_lat_long, get_current_weather, get_forecast
 from secrets_helper import get_api_key
+from graph import dict_creator, graph, average_data, graph_generator
 from datetime import datetime
 import json
 
@@ -83,8 +84,14 @@ def show_weather():
 
     current = cached_data['current']
     forecast = cached_data['forecast']
-    
-    # Render the page template (Flask uses Jinja2)
+
+    highTempData  = dict_creator(forecast.dates, forecast.temps_max)
+    lowTempData  = dict_creator(forecast.dates, forecast.temps_min)
+    avgTempData = dict_creator(forecast.dates, average_data(forecast.temps_max, forecast.temps_min))
+    print(highTempData)
+    print(lowTempData)
+    print(avgTempData)
+    graph_generator(avgTempData,highTempData,lowTempData)
     return render_template(
       "index.html",
       city = city,
