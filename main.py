@@ -1,10 +1,11 @@
 from AI_helper import groqValidateInput
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template,send_file
 
 from weather import get_lat_long, get_current_weather, get_forecast
 from secrets_helper import get_api_key
 from graph import dict_creator, graph, average_data, graph_generator
 from datetime import datetime
+
 import json
 import pytz
 
@@ -116,6 +117,10 @@ def show_weather():
       forecast = forecast,
       local_time = local_time
     )
+
+@app.route("/graph")
+def serve_graph():
+    return send_file("./tmp/graph/graph.png", mimetype="image/png")
 
 # Run via the Flask development server if running main.py directly
 if __name__ == "__main__":
