@@ -50,7 +50,7 @@ def graph_generator(average, high, low):
     plt.legend(['Average Temperature', 'High Temperature', 'Low Temperature'] )
     plt.title("Next week Temperature forecast")
     #os.makedirs('./static/graph', exist_ok=True)
-    os.remove('./static/graph/graph.png')
+    #os.remove('./static/graph/graph.png')
     plt.savefig('./static/graph/graph.png')
     print("executed")
     plt.close()
