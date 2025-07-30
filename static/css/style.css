@@ -309,6 +309,15 @@ height: 30px;
 }
 
 
+.current-location a{
+  color:#c77b50
+}
+
+.current-location a:hover{
+  color:#cc983e;
+  transition:0.3s;
+}
+
 #graph{
   display:flex;
   flex-direction: column;
