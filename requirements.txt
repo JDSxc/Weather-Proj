@@ -3,3 +3,4 @@ requests
 python-dotenv
 gunicorn
 google-cloud-secret-manager
+pytz
