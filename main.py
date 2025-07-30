@@ -90,6 +90,7 @@ def show_weather():
     current = cached_data['current']
     forecast = cached_data['forecast']
 
+
     highTempData  = dict_creator(forecast.dates, forecast.temps_max)
     lowTempData  = dict_creator(forecast.dates, forecast.temps_min)
     avgTempData = dict_creator(forecast.dates, average_data(forecast.temps_max, forecast.temps_min))
@@ -97,6 +98,7 @@ def show_weather():
     print(lowTempData)
     print(avgTempData)
     graph_generator(avgTempData,highTempData,lowTempData)
+
 
     local_time = datetime.now(cached_data['timezone']).strftime("%I:%M %p") # Format as 3:00 PM
 
