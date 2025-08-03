@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>Nimbus</title>
   <link rel="shortcut icon" type="image/icon" href="{{url_for('static', filename='project-logo/logo.png')}}"/>
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 {% set desc = current.description | lower %}
@@ -22,7 +25,11 @@
            {{ country }}
            </a>
         </h2>
-      <p style="text-align:center;"> Current time: {{ local_time }}</p></div>
+        <div class="time" style="display:grid; text-align: center;font-family: 'Nunito', sans-serif;">
+          <div id="region"> </div>
+          <div id="clock" style="text-align:center; padding:10px;"></div>
+        </div>
+      </div>
       </li>
       <li>
         <form method="get" action="/">
@@ -62,27 +69,33 @@
   {% else %}
     none
   {% endif %}">
+      <div class="card-section-title">🌤️ <div style="font-family: 'Raleway', sans-serif;">Live Weather</div></div>
 
 
  
       {% if current %}
       <div class="row">
+        
         <div class="card">
-          <div class="card-label">Temperature:</div>
-          <div class="card-value">{{ current.temp }}°F <img src="{{ url_for('static', filename='icons/hot.png')}}"></div>
+          <div class="card-title">🌡️ Temperature</div>
+          <div class="card-label"><img class="status-icon"src="{{ url_for('static', filename='icons/Temperature.png')}}" alt="Temperature:"></div>
+          <div class="card-value">{{ current.temp }}°F </div>
         </div>
         <div class="card">
-          <div class="card-label">Condition:</div>
+          <div class="card-title">☁︎⋅ Weather</div>
+          <div class="card-label"><img class="status-icon" src="{{ url_for('static', filename='icons/weather.png')}}" alt="Condition:"></div>
           <div class="card-value">{{ current.description }}</div>
         </div>
       </div>
       <div class="row">
         <div class="card">
-          <div class="card-label">Humidity:</div>
+          <div class="card-title">🫧 Humidity</div>
+          <div class="card-label"><img class="status-icon" src="{{ url_for('static', filename='icons/humidity.png')}}" alt="Condition:"></div>
           <div class="card-value">{{ current.humidity }}%</div>
         </div>
         <div class="card">
-          <div class="card-label">Wind:</div>
+          <div class="card-title">🍃 Windspeed</div>
+          <div class="card-label"><img class="status-icon" src="{{ url_for('static', filename='icons/kaze.png')}}" alt="Condition:"></div>
           <div class="card-value">{{ current.windspeed }} mph</div>
         </div>
       </div>
@@ -147,10 +160,24 @@
     function clearInput() {
       document.getElementById("searchInput").value = "";
     }
-
-    function openTab(evt, Tab) {
+    const timeZone = "{{ local_time }}";
+    function convertTimeZone(){
+      const now = new Date();
+      const options = {
+        timeZone: timeZone,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      };
+      const formatter = new Intl.DateTimeFormat("en-US", options);
+      const formattedTime = formatter.format(now);
+      document.getElementById("region").textContent = `Region: ${timeZone}`;
+      document.getElementById("clock").textContent = `Local Time: ${formattedTime}`;
     
     }
+    convertTimeZone(); // initial call
+    setInterval(convertTimeZone, 1000);
   </script>
 </body>
 </html>

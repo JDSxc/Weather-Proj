@@ -85,8 +85,10 @@ def show_weather():
             cached_data['forecast'] = get_forecast(lat, lon)
 
             print("Converting Open-Meteo timezone response to datetime object\n")
-            timezone_str = cached_data['current'].timezone
-            cached_data['timezone'] = pytz.timezone(timezone_str)
+            
+            #timezone_str = cached_data['current'].timezone
+            cached_data['timezone'] = cached_data['current'].timezone
+            #cached_data['timezone'] = pytz.timezone(timezone_str)
 
     current = cached_data['current']
     forecast = cached_data['forecast']
@@ -102,9 +104,9 @@ def show_weather():
     graph_generator(celsius_dict(avgTempData),celsius_dict(highTempData),celsius_dict(lowTempData), "C")
     #graph_generator_interactive(avgTempData,highTempData,lowTempData)
 
-    local_time = datetime.now(cached_data['timezone']).strftime("%I:%M %p") # Format as 3:00 PM
-
-    print(f"Local time in {city}: {local_time}\n")
+    #local_time = datetime.now(cached_data['timezone']).strftime("%I:%M %p") # Format as 3:00 PM
+    local_time = cached_data['timezone']
+    print(f"Local time in {city}: {'''local_time'''}\n")
     
     # Render the page template (Flask uses Jinja2)
 
@@ -130,3 +132,4 @@ def serve_graph_C():
 # Run via the Flask development server if running main.py directly
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
+
