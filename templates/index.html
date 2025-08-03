@@ -108,13 +108,32 @@
   </div>
   <div class="right-panel">
     <div class="graph" id="graph"> 
-      <h1>graph</h1>
-      <div>
-        <img src="{{ url_for('serve_graph') }}" alt="Temperature Graph">
+      <h1 style="display:block; text-align: center;">Weekly Temperature Forecast</h1>
+      <div class="mytabs">
+        <!-- Tab selector -->
+        <input type="radio" id="fahrenheit" name="tab" checked>
+        <label class="toggle-button" for="fahrenheit">Fahrenheit</label>
+
+        <input type="radio" id="celsius" name="tab">
+        <label class="toggle-button" for="celsius">Celsius</label>
+
+        <!-- Fahrenheit tab content -->
+        <div class="tabs" id="tab-fahrenheit">
+          <h2>7-Day Forecast (°F)</h2>
+          <img class="graph-image" src="{{ url_for('serve_graph_F') }}" alt="Temperature Graph in Fahrenheit">
+        </div>
+
+        <!-- Celsius tab content -->
+        <div class="tabs" id="tab-celsius">
+          <h2>7-Day Forecast (°C)</h2>
+          <img class="graph-image" src="{{ url_for('serve_graph_C') }}" alt="Temperature Graph in Celsius">
+        </div>
       </div>
     </div>
+      
   </div>
-  </div>
+</div>
+  
   
 
 
@@ -127,6 +146,10 @@
   <script>
     function clearInput() {
       document.getElementById("searchInput").value = "";
+    }
+
+    function openTab(evt, Tab) {
+    
     }
   </script>
 </body>

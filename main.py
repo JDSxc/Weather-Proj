@@ -3,7 +3,7 @@ from flask import Flask, request, render_template,send_file
 
 from weather import get_lat_long, get_current_weather, get_forecast
 from secrets_helper import get_api_key
-from graph import dict_creator, graph, average_data, graph_generator
+from graph import dict_creator, graph, average_data, graph_generator, celsius_dict
 from datetime import datetime
 
 import json
@@ -98,8 +98,9 @@ def show_weather():
     print(highTempData)
     print(lowTempData)
     print(avgTempData)
-    graph_generator(avgTempData,highTempData,lowTempData)
-
+    graph_generator(avgTempData,highTempData,lowTempData, "F")
+    graph_generator(celsius_dict(avgTempData),celsius_dict(highTempData),celsius_dict(lowTempData), "C")
+    #graph_generator_interactive(avgTempData,highTempData,lowTempData)
 
     local_time = datetime.now(cached_data['timezone']).strftime("%I:%M %p") # Format as 3:00 PM
 
@@ -118,9 +119,13 @@ def show_weather():
       local_time = local_time
     )
 
-@app.route("/graph")
-def serve_graph():
-    return send_file("/tmp/graph/graph.png", mimetype="image/png")
+
+@app.route("/graph_f")
+def serve_graph_F():
+    return send_file("/tmp/graph/graph_F.png", mimetype="image/png")
+@app.route("/graph_c")
+def serve_graph_C():
+    return send_file("/tmp/graph/graph_C.png", mimetype="image/png")
 
 # Run via the Flask development server if running main.py directly
 if __name__ == "__main__":
