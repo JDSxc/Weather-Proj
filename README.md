@@ -20,4 +20,4 @@ Set up and use the project:
 9. Run the web app locally using the development server:
 ```python main.py``` (end with ```CTRL+C```)
 10. Access the web app remotely (Providing no args after .com/ gives San Antonio by default. Otherwise, provide a City, State, and Country in URL):
-[https://elegant-canto-467120-n6.uc.r.appspot.com/?city=Miami&state=fl&country=US](https://elegant-canto-467120-n6.uc.r.appspot.com/)
+[https://elegant-canto-467120-n6.uc.r.appspot.com/](https://elegant-canto-467120-n6.uc.r.appspot.com/)
