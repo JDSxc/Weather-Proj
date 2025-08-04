@@ -443,6 +443,10 @@ height: 100px;
   }
   .current-status{
     padding:5%;
+    margin-top: 5%;
+    
+    margin-left: 2%;
+    margin-right: 2%;
   }
   .row{
     padding:2%;
