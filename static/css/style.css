@@ -3,7 +3,7 @@ body {
     height: 100vh;
     background-color: hsl(204, 73%, 86%);
 
-    font-family: sans-serif;
+    font-family: Ubuntu, sans-serif;
 }
 
 .cloud-theme, .overcast-theme{
