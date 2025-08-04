@@ -5,7 +5,7 @@ from weather import get_lat_long, get_current_weather, get_forecast
 from secrets_helper import get_api_key
 from graph import dict_creator, graph, average_data, graph_generator, celsius_dict
 from datetime import datetime
-
+from weather_code_info import weather_code_desc
 import json
 import pytz
 
@@ -118,7 +118,8 @@ def show_weather():
       error = error,
       current = current,
       forecast = forecast,
-      local_time = local_time
+      local_time = local_time,
+      img_code = list(weather_code_desc.keys())[list(weather_code_desc.values()).index(current.description)]
     )
 
 

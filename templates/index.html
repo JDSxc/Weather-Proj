@@ -83,7 +83,7 @@
         </div>
         <div class="card">
           <div class="card-title">☁︎⋅ Weather</div>
-          <div class="card-label"><img class="status-icon" src="{{ url_for('static', filename='icons/weather.png')}}" alt="Condition:"></div>
+          <div class="card-label"><img class="status-icon" src="{{ url_for('static', filename='icons/' ~ img_code ~ '.png')}}" alt="Condition:"></div>
           <div class="card-value">{{ current.description }}</div>
         </div>
       </div>
