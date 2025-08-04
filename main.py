@@ -3,12 +3,10 @@ from flask import Flask, request, render_template,send_file
 
 from weather import get_lat_long, get_current_weather, get_forecast
 from secrets_helper import get_api_key
-from graph import dict_creator, graph, average_data, graph_generator, celsius_dict
-from datetime import datetime
+from graph import dict_creator, average_data, graph_generator, celsius_dict
 from weather_code_info import weather_code_desc
 import json
 import time
-import pytz
 
 OWM_API_KEY = get_api_key("OWM_API_KEY")
 
@@ -134,7 +132,7 @@ def show_weather():
     )
     t1 = time.perf_counter()
     print(f"  C graph took {(t1-t0)*1000:.2f} ms\n")
-    
+
     #graph_generator_interactive(avgTempData,highTempData,lowTempData)
 
     #local_time = datetime.now(cached_data['timezone']).strftime("%I:%M %p") # Format as 3:00 PM
