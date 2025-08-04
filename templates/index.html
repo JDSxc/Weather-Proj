@@ -11,7 +11,7 @@
 </head>
 {% set desc = current.description | lower %}
 
-<body>
+<body class="">
     <nav class="nav-bar">
     <ul>
       <li>
@@ -174,10 +174,29 @@
       const formattedTime = formatter.format(now);
       document.getElementById("region").textContent = `Region: ${timeZone}`;
       document.getElementById("clock").textContent = `Local Time: ${formattedTime}`;
-    
+     
     }
+
+    function setTheme(){
+      const now = new Date();
+      const options = {
+        timeZone: timeZone,
+        hour: "2-digit",
+        hour12: false
+      }
+      const formatter = new Intl.DateTimeFormat("en-US", options);
+      const hourString = formatter.format(now);  // returns "07" or "23"
+      const hour = parseInt(hourString); // convert to number
+      if(hour >= 6 && hour < 18){
+        document.body.classList.remove("darkmode");
+      }else{
+         document.body.classList.add("darkmode");
+      }
+    }
+    setTheme();
     convertTimeZone(); // initial call
     setInterval(convertTimeZone, 1000);
+    setInterval(setTheme, 60 * 1000);
   </script>
 </body>
 </html>
