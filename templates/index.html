@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nimbus</title>
   <link rel="shortcut icon" type="image/icon" href="{{url_for('static', filename='project-logo/logo.png')}}"/>
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -20,7 +20,7 @@
         </div>
       </li>
       <li>
-        <div class="current-location" style="position: absolute;left: 50%;transform: translateX(-50%);"><h2>Weather in <a style="text-decoration: none;" href="https://www.google.com/maps/place/{{ city + ' '+ country| urlencode }}" target="_blank">{{ city }},
+        <div class="current-location" ><h2>Weather in <a style="text-decoration: none;" href="https://www.google.com/maps/place/{{ city + ' '+ country| urlencode }}" target="_blank">{{ city }},
           {% if state %} {{ state }},{% endif %}
            {{ country }}
            </a>
@@ -178,7 +178,7 @@
     }
 
     function setTheme(){
-      const now = new Date();
+      const now = new Date(); 
       const options = {
         timeZone: timeZone,
         hour: "2-digit",
