@@ -33,8 +33,9 @@ def show_weather():
 
     if request.args.get("searchInput"): # If we have an arg for searchInput in URL...
         jsonString = groqValidateInput(request.args.get("searchInput")) # Have Groq validate it, returning results as JSON
+        print("Groq response (raw): " + jsonString)
         parsed = json.loads(jsonString) # Convert that JSON into a Python Object
-        print("GROQ: jsonString =", repr(jsonString))
+        print("Groq response (parsed) " + repr(jsonString))
 
         if 'Error' in parsed: # If Groq returned an error...
             print("Groq returned an error while attempting to validate searchInput\n")
@@ -97,16 +98,16 @@ def show_weather():
     highTempData  = dict_creator(forecast.dates, forecast.temps_max)
     lowTempData  = dict_creator(forecast.dates, forecast.temps_min)
     avgTempData = dict_creator(forecast.dates, average_data(forecast.temps_max, forecast.temps_min))
-    print(highTempData)
-    print(lowTempData)
-    print(avgTempData)
+    print(f"High Temps: {highTempData}")
+    print(f"Low Temps:  {lowTempData}")
+    print(f"Avg Temps:  {avgTempData}")
     graph_generator(avgTempData,highTempData,lowTempData, "F")
     graph_generator(celsius_dict(avgTempData),celsius_dict(highTempData),celsius_dict(lowTempData), "C")
     #graph_generator_interactive(avgTempData,highTempData,lowTempData)
 
     #local_time = datetime.now(cached_data['timezone']).strftime("%I:%M %p") # Format as 3:00 PM
     local_time = cached_data['timezone']
-    print(f"Local time in {city}: {'''local_time'''}\n")
+    # print(f"Local time in {city}: {local_time}\n")
     
     # Render the page template (Flask uses Jinja2)
 

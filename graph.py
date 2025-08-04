@@ -61,7 +61,7 @@ def graph_generator(average, high, low, tempType):
 
     os.makedirs("/tmp/graph", exist_ok=True)
     plt.savefig(f'/tmp/graph/graph_{tempType}.png', bbox_inches="tight")
-    print("executed")
+    print("Created forecast graph.")
     plt.close()
 
 

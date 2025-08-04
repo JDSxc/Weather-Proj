@@ -15,16 +15,18 @@ def groqValidateInput(prompt):
         "model": model,
         "messages": [
             {
-                "role": "system", 
-                "content": "Given a short location input like 'hcmc vn' or 'austin texas us' or 'Los Angeles', "
-                "If you are given a city name, within your best knowledge return it with the correct JSON format "
-                "If multiple cities match, return your first match."
-                "If the city no longer exists, or the name has changed, return current city with the same location, for example (Constantinople, Byzantine to Istanbul, Turkey)."
-                "Return ONLY valid JSON with EXACTLY the following keys: city, state, country. "
-                "Use the full name for city, state, and country. If state is not applicable, make it blank. "
-                "You MUST validate that the city actually exists in that state and country. "
-                "If it's invalid or does not exist in the given country/state, reply ONLY with: "
-                "{\"Error\": \"invalid input\"}"
+                "role": "system",
+                "content": "Given a short location input like 'hcmc vn', 'austin texas us', or 'Los Angeles':\n"
+                        "1. Parse the input into three fields: city, state (or province), and country.\n"
+                        "2. Normalize each to its full, official English name.\n"
+                        "3. Verify that the city exists in the specified state and country.\n"
+                        "   If multiple matches exist, choose the first.\n"
+                        "   If the city has been renamed or no longer exists, map it to its current name at the same location (e.g. 'Constantinople, Byzantine' -> Istanbul, Turkey).\n"
+                        "4. PRODUCE ONLY A SINGLE JSON OBJECT with EXACTLY these keys (in this order):\n"
+                        "   {\"city\":\"<Full City Name>\",\"state\":\"<Full State/Province Name or empty string>\",\"country\":\"<Full Country Name>\"}\n"
+                        "5. Do NOT output any extra text, comments, or whitespace outside the JSON.\n"
+                        "6. If validation fails for any reason, output exactly: {\"Error\":\"invalid input\"}\n"
+                        "Ensure your response is always valid JSON so that json.loads(...) never breaks."
             },
             {
                 "role": "user",
@@ -33,6 +35,7 @@ def groqValidateInput(prompt):
         ],
         "temperature": 0
     }
+
     response = requests.post(url, headers=headers, json=body)
     content= response.json()['choices'][0]['message']['content']
     return content
