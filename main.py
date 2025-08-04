@@ -84,7 +84,7 @@ def show_weather():
         t0 = time.perf_counter()
         lat, lon = get_lat_long(city, state, country, OWM_API_KEY) # Get lat/lon through OWM API
         t1 = time.perf_counter()
-        print(f"Lat/Lon lookup took {(t1 - t0) * 1000:.2f} ms\n")
+        print(f"  Lat/Lon lookup took {(t1 - t0) * 1000:.2f} ms\n")
 
         if lat is None or lon is None: # If OWM API returns an error...
             print("Open Weather Map API returned 'None' for lat/lon\n")
@@ -95,11 +95,11 @@ def show_weather():
             t0 = time.perf_counter()
             cached_data['current'] = get_current_weather(lat, lon)
             t1 = time.perf_counter()
-            print(f"Current weather fetch took {(t1 - t0) * 1000:.2f} ms")
+            print(f"  Current weather fetch took {(t1 - t0) * 1000:.2f} ms")
 
             cached_data['forecast'] = get_forecast(lat, lon)
             t1 = time.perf_counter()
-            print(f"Forecast fetch took {(t1 - t0) * 1000:.2f} ms\n")
+            print(f"  Forecast fetch took {(t1 - t0) * 1000:.2f} ms\n")
 
             #print("Converting Open-Meteo timezone response to datetime object\n")
             
@@ -137,6 +137,7 @@ def show_weather():
 
     #local_time = datetime.now(cached_data['timezone']).strftime("%I:%M %p") # Format as 3:00 PM
     local_time = cached_data['timezone']
+    print(f"Timezone: {cached_data['timezone']}\n")
     # print(f"Local time in {city}: {local_time}\n")
     
     t1_total = time.perf_counter()
