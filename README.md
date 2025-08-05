@@ -1,7 +1,7 @@
 A simple single-page web application for displaying the current weather and 8-day forecast for a given location (based on Country, State, and City). 
-Defaults to San Antonio, TX, US, if no input is provided. Location and Weather data are provided via Open Weather Map and Open-Meteo API's, respectively.
+Defaults to San Antonio, TX, US, if no input is provided. Location and Weather data are provided via Open Weather Map and Open-Meteo APIs, respectively.
 
-Powered by Google Cloud and Google App Engine.
+Powered by Google Cloud and App Engine Standard.
 
 Set up and use the project:
 1. Create project folder 
