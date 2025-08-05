@@ -109,6 +109,7 @@ def show_weather():
             t1 = time.perf_counter()
             print(f"  Current weather fetch took {(t1 - t0) * 1000:.2f} ms")
 
+            t0 = time.perf_counter()
             cached_data['forecast'] = get_forecast(lat, lon)
             t1 = time.perf_counter()
             print(f"  Forecast fetch took {(t1 - t0) * 1000:.2f} ms\n")
