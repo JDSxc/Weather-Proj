@@ -1,7 +1,7 @@
 A simple single-page web application for displaying the current weather and 8-day forecast for a given location (based on Country, State, and City). 
-Defaults to San Antonio, TX, US, if no input is provided. Location and Weather data are provided via Open Weather Map and Open-Meteo API's, respectively.
+Defaults to San Antonio, TX, US, if no input is provided. Location and Weather data are provided via Open Weather Map and Open-Meteo APIs, respectively.
 
-Powered by Google Cloud and Google App Engine.
+Powered by Google Cloud and App Engine Standard.
 
 Set up and use the project:
 1. Create project folder 
@@ -17,7 +17,10 @@ Set up and use the project:
 ``` and then try ```.\venv\Scripts\Activate.ps1```
 8. Install dependencies within the virtual environment:
 ```pip install -r reqirements.txt```
-9. Run the web app locally using the development server:
+9. Create a .env file in within the root of the project folder and populate the following API keys:
+```OWM_API_KEY=```
+```GROQ_API_KEY=```
+10. Run the web app locally using the development server:
 ```python main.py``` (end with ```CTRL+C```)
-10. Access the web app remotely (Providing no args after .com/ gives San Antonio by default. Otherwise, provide a City, State, and Country in URL):
+11. Access the web app remotely (providing input to the text field in the upper right-hand corner):
 [https://elegant-canto-467120-n6.uc.r.appspot.com/](https://elegant-canto-467120-n6.uc.r.appspot.com/)
