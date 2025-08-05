@@ -27,7 +27,7 @@
            </a>
         </h2>
         <div class="time" style="display:grid; text-align: center;font-family: 'Nunito', sans-serif;">
-          <div id="region"> </div>
+          <div id="time-zone">Time zone: {{ local_time }}</div>
           <div id="clock" style="text-align:center; padding:10px;"></div>
         </div>
       </div>
@@ -173,7 +173,7 @@
       };
       const formatter = new Intl.DateTimeFormat("en-US", options);
       const formattedTime = formatter.format(now);
-      document.getElementById("region").textContent = `Region: ${timeZone}`;
+      //document.getElementById("time-zone").textContent = `Time zone: ${timeZone}`;
       document.getElementById("clock").textContent = `Local Time: ${formattedTime}`;
      
     }
