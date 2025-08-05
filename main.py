@@ -34,7 +34,14 @@ def show_weather():
 
     if request.args.get("searchInput"): # If we have an arg for searchInput in URL...
         t0 = time.perf_counter()
-        jsonString = groqValidateInput(request.args.get("searchInput")) # Have Groq validate it, returning results as JSON
+
+        try:
+            jsonString = groqValidateInput(request.args.get("searchInput")) # Have Groq validate it, returning results as JSON
+            print("Groq input validation was successful.\n")
+        except Exception as exc: # In case something goes wrong during Groq input validation
+            jsonString = '{"Error":"service_unavailable"}'
+            print("Groq input validation failed: %s\n", exc)
+
         t1 = time.perf_counter()
         print(f"Input validation took {(t1 - t0) * 1000:.2f} ms")
 
@@ -44,7 +51,12 @@ def show_weather():
 
         if 'Error' in parsed: # If Groq returned an error...
             print("Groq returned an error while attempting to validate searchInput\n")
-            error = "We could not match your input to a valid location. Please try again using city, state (if applicable), and country."
+            if parsed["Error"] == "invalid_input": # Groq couldn't match the input to a real world location
+                error = "We could not match your input to a valid location. Please try again using city, state (if applicable), and country."
+            elif parsed["Error"] == "service_unavailable": # Groq was down, timed out, or some other networking issue
+                error = "There was a problem with our input validation service. Please try again in a few moments."
+            else:
+                error = "An unexpected error occurred."
         else: # Load the results for City, State, and Country from Groq
             parsed_city = parsed['city'].title()
             parsed_state = parsed['state'].title()
