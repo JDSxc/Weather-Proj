@@ -452,8 +452,9 @@ height: 100px;
     transform: none; 
   }
   .left-panel, .right-panel{
-    min-height: 60vh;
+    min-height: auto;
   }
+
   .current-status{
     padding:5%;
     margin-top: 5%;

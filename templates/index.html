@@ -124,20 +124,20 @@
     <div class="graph" id="graph"> 
       <h1 style="display:block; text-align: center;">Weekly Temperature Forecast</h1>
       <div class="mytabs">
-        <!-- Tab selector -->
+        <!-- Tab -->
         <input type="radio" id="fahrenheit" name="tab" checked>
         <label class="toggle-button" for="fahrenheit">Fahrenheit</label>
 
         <input type="radio" id="celsius" name="tab">
         <label class="toggle-button" for="celsius">Celsius</label>
 
-        <!-- Fahrenheit tab content -->
+        <!-- Fahrenheit tab -->
         <div class="tabs" id="tab-fahrenheit">
           <h2>8-Day Forecast (°F)</h2>
           <img class="graph-image" src="{{ url_for('serve_graph_F') }}" alt="Temperature Graph in Fahrenheit">
         </div>
 
-        <!-- Celsius tab content -->
+        <!-- Celsius tab -->
         <div class="tabs" id="tab-celsius">
           <h2>8-Day Forecast (°C)</h2>
           <img class="graph-image" src="{{ url_for('serve_graph_C') }}" alt="Temperature Graph in Celsius">
