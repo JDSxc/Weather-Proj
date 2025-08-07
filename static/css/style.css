@@ -273,11 +273,13 @@ height: 100px;
   display:flex;
   color:#5d98b6;
   z-index: 10;
+  transition: color 0.3s ease, filter 0.3s ease;
 }
 
 
 .site-name-logo a:hover{
   color:#ff9a8b;
+  filter:drop-shadow(1px 1px 20px yellow);
 }
 
 .site-name-logo img{
