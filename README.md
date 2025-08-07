@@ -56,7 +56,7 @@ http://127.0.0.1:8080/
 ```
 
 
-##🛠️ Tech Stack
+## 🛠️ Tech Stack
 - Backend: Flask, Python 3.12, Jinja2
 - Frontend: HTML, CSS, JS
 - APIs: Groq (LLM), OpenWeatherMap, Open-Meteo
