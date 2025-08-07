@@ -1,26 +1,71 @@
-A simple single-page web application for displaying the current weather and 8-day forecast for a given location (based on Country, State, and City). 
-Defaults to San Antonio, TX, US, if no input is provided. Location and Weather data are provided via Open Weather Map and Open-Meteo APIs, respectively.
+# 🌤️ Nimbus – Your Weather App, But Cooler
 
-Powered by Google Cloud and App Engine Standard.
+**Nimbus** is a single-page web application that displays the current weather and 8-day forecast for any user-provided location. It supports natural language input, renders temperature trend charts, and displays the local time based on the city queried.
 
-Set up and use the project:
-1. Create project folder 
-2. Clone the repository into the project folder:
-```git clone https://github.com/JDSxc/Weather-Proj.git```
-4. Create a virtual environment in PowerShell or CMD:
-```python -m venv venv```
-5. Activate the virtual environment:
-```.\venv\Scripts\Activate``` (in PowerShell)
-```venv\Scripts\activate.bat``` (in CMD)
-6. If the venv is activated, the terminal should show ```(venv)``` in front of the directory path
-7. If you get a message saying "running scripts is disabled", run ```Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-``` and then try ```.\venv\Scripts\Activate.ps1```
-8. Install dependencies within the virtual environment:
-```pip install -r reqirements.txt```
-9. Create a .env file in within the root of the project folder and populate the following API keys:
-```OWM_API_KEY=```
-```GROQ_API_KEY=```
-10. Run the web app locally using the development server:
-```python main.py``` (end with ```CTRL+C```)
-11. Access the web app remotely (providing input to the text field in the upper right-hand corner):
-[https://elegant-canto-467120-n6.uc.r.appspot.com/](https://elegant-canto-467120-n6.uc.r.appspot.com/)
+> **Default Location:** San Antonio, TX, US (if no input is provided)
+
+---
+
+## 🔗 Live Demo & Source Code
+
+- 🌐 **Live App:** [https://elegant-canto-467120-n6.uc.r.appspot.com/](https://elegant-canto-467120-n6.uc.r.appspot.com/)
+- 📂 **GitHub Repository:** [https://github.com/JDSxc/Weather-Proj](https://github.com/JDSxc/Weather-Proj)
+
+---
+
+## 🚀 Setup Instructions (Local Development)
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/JDSxc/Weather-Proj.git
+cd Weather-Proj
+```
+### 2. Create and Activate Virtual Environment
+in PowerShell
+```PowerShell
+python -m venv venv
+.\venv\Scripts\Activate
+```
+or in CMD
+```CMD 
+python -m venv venv
+venv\Scripts\activate.bat
+```
+If activation is blocked, run:
+```Set-ExecutionPolicy RemoteSigned -Scope CurrentUser```
+Then try activating again.
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+### 4. Add your API keys
+Create a .env file in the project root:
+```
+OWM_API_KEY=your_openweathermap_key
+GROQ_API_KEY=your_groq_api_key
+```
+### 5. Run the application locally
+
+```
+python3 main.py
+```
+Then open your browser to:
+```
+http://127.0.0.1:8080/
+```
+
+
+## 🛠️ Tech Stack
+- Backend: Flask, Python 3.12, Jinja2
+- Frontend: HTML, CSS, JS
+- APIs: Groq (LLM), OpenWeatherMap, Open-Meteo
+- Graphing: Matplotlib
+- Hosting: Google Cloud App Engine
+- Secrets Management: dotenv (local), Google Cloud Secret Manager (prod)
+## 📄 License
+- This project is open-source. Feel free to fork, modify, and use it.
+
+## 👤 Author
+Developed by [JDSxc](https://github.com/JDSxc), [Jaime1108](https://github.com/Jaime1108) and [NamNguyenUTSA](https://github.com/NamNguyenUTSA)
