@@ -21,11 +21,12 @@ git clone https://github.com/JDSxc/Weather-Proj.git
 cd Weather-Proj
 ```
 ### 2. Create and Activate Virtual Environment
+in PowerShell
 ```PowerShell
 python -m venv venv
 .\venv\Scripts\Activate
 ```
-or
+or in CMD
 ```CMD 
 python -m venv venv
 venv\Scripts\activate.bat
@@ -66,5 +67,5 @@ http://127.0.0.1:8080/
 ## 📄 License
 - This project is open-source. Feel free to fork, modify, and use it.
 
-👤 Author
+## 👤 Author
 Developed by [JDSxc](https://github.com/JDSxc), [Jaime1108](https://github.com/Jaime1108) and [NamNguyenUTSA](https://github.com/NamNguyenUTSA)
