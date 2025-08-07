@@ -109,9 +109,20 @@
 
     <div class="weekdays">
       {% for date, max_temp, min_temp, desc, icon in zip(forecast.dates, forecast.temps_max, forecast.temps_min, forecast.descriptions, forecast.icons) %}
-        <div class="card">
-          <p><strong>{{ date }}</strong></p>
-          <hr styles="width:1px;height:100px;"></hr>
+        <div class="card  {% set desc_lower = desc|lower %}
+              {% if 'storm' in desc_lower %}
+                storm-theme
+              {% elif 'overcast' in desc_lower or 'cloud' in desc_lower %}
+                overcast-theme
+              {% elif 'clearsky' in desc_lower or 'clear' in desc_lower %}
+                clearsky-theme
+              {% elif 'rain' in desc_lower or 'drizzle' in desc_lower %}
+                rain-theme
+              {% else %}
+                none
+              {% endif %}"  ><div class="blur-filter"></div>
+          <h4><strong>{{ date }}</strong></h4>
+          <hr styles=""></hr>
           <img src="{{ icon }}" alt="icon" width="40">
           <p>{{ desc }}</p>
           <p>↑ {{ max_temp }}°F</p>
