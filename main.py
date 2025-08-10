@@ -21,6 +21,19 @@ cached_data={ # Default to San Antonio, if no GET args are provided
     'forecast': None,
     'timezone': None
 }
+search_cache = []
+
+def clean_search_cache(search_cache):
+    if len(search_cache) >3:
+        search_cache.pop(0)
+
+
+def add_search(search_cache, newdict):
+    for dict in search_cache:
+        if newdict['city'] == dict['city']:
+            return
+    search_cache.append(newdict)
+
 
 @app.route("/")
 def show_weather():
@@ -101,6 +114,7 @@ def show_weather():
         if lat is None or lon is None: # If OWM API returns an error...
             print("Open Weather Map API returned 'None' for lat/lon\n")
             error = f"City not found: {city}"
+            
         else: # Use lat/lon to get current weather and forecast from Open-Meteo API
             print("Fetching fresh weather data from Open-Meteo using Lat/Lon")
 
@@ -155,7 +169,11 @@ def show_weather():
     
     t1_total = time.perf_counter()
     print(f"show_weather() took {(t1_total - t0_total) * 1000:.2f} ms\n")
-
+    img_code = list(weather_code_desc.keys())[list(weather_code_desc.values()).index(current.description)]
+    
+    add_search(search_cache, {'city': city, 'state' : state, 'country' :country, 'img_code': img_code})
+    clean_search_cache(search_cache)
+    print(search_cache)
     # Render the page template (Flask uses Jinja2)
     return render_template(
       "index.html",
@@ -166,7 +184,8 @@ def show_weather():
       current = current,
       forecast = forecast,
       local_time = local_time,
-      img_code = list(weather_code_desc.keys())[list(weather_code_desc.values()).index(current.description)]
+      img_code = list(weather_code_desc.keys())[list(weather_code_desc.values()).index(current.description)],
+      search_cache = search_cache
     )
 
 

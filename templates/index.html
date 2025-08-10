@@ -155,7 +155,14 @@
         </div>
       </div>
     </div>
-      
+    <div class="previous-search">
+      <h1>Previous Location:</h1>
+        <div class="previous-location">
+          {% for item in search_cache %}
+            <button class="" onclick="window.location.href='/?searchInput={{ item.city }} {{ item.state }} {{ item.country }}'"><img style="height:40px;width:auto;" src="{{ url_for('static', filename='icons/' ~ item.img_code ~ '.png')}}"><p>{{ item.city }}{% if item.state %}, {{ item.state }} {% endif %}, {{ item.country }}</p></button>
+          {% endfor %}
+        </div>
+    </div>
   </div>
 </div>
   

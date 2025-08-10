@@ -18,12 +18,16 @@ def groqValidateInput(prompt):
             {
                 "role": "system",
                 "content": "Given a short location input like 'hcmc vn', 'austin texas us', or 'Los Angeles':\n"
-                        "1. Parse the input into three fields: city, state (or province), and country.\n"
+                        "1. Parse the input into three fields: city, state (or province, region), and country.\n"
                         "2. Normalize each to its full, official English name.\n"
                         "3. Verify that the city exists in the specified state and country.\n"
                         "   If multiple matches exist, choose the first.\n"
-                        "   If the city has been renamed or no longer exists, map it to its current name at the same location "
+                        "   If the city has been renamed or no longer exists, map it to its current name at the same location\n"
                         "(e.g. 'Constantinople, Byzantine' -> Istanbul, Turkey).\n"
+                        "   If only given a state, map it to the capitol city (e.g Texas -> Austin, Texas) (Lincolnshire -> City of Lincoln) \n"
+                        "   A prefecture like Hokkaido is treated similarly to a state or province \n"
+                        "   If a city/province/country name is entered in other languages not in English (e.g. Trùng Khánh (vietnamese)) change the name to English (Chongqing) \n"
+                        "   A city must never be empty. If unable to map the city: output exactly: {\"Error\":\"invalid_input\"}\n"
                         "4. PRODUCE ONLY A SINGLE JSON OBJECT with EXACTLY these keys (in this order):\n"
                         "   {\"city\":\"<Full City Name>\",\"state\":\"<Full State/Province Name or empty string>\",\"country\":\"<Full Country Name>\"}\n"
                         "5. Do NOT output any extra text, comments, or whitespace outside the JSON.\n"

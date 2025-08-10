@@ -32,6 +32,7 @@ def get_lat_long(city_name, state_code, country_name, api_key):
     f",{country_name}&appid={api_key}").json()
 
     if not resp:
+        print("Unable to find location")
         return None, None
 
     data = resp[0]
