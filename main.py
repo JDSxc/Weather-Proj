@@ -29,8 +29,8 @@ def clean_search_cache(search_cache):
 
 
 def add_search(search_cache, newdict):
-    for dict in search_cache:
-        if newdict['city'] == dict['city']:
+    for searchEntry in search_cache:
+        if newdict['city'] == searchEntry['city']:
             return
     search_cache.append(newdict)
 
@@ -44,7 +44,9 @@ def show_weather():
     city = cached_data['city'] 
     state = cached_data['state'] 
     country = cached_data['country']
-
+    current = cached_data.get('current')
+    forecast = cached_data.get('forecast')
+    img_code = None
     if request.args.get("searchInput"): # If we have an arg for searchInput in URL...
         t0 = time.perf_counter()
 
@@ -62,15 +64,60 @@ def show_weather():
         parsed = json.loads(jsonString) # Convert that JSON into a Python Object
         print("Groq response (parsed) " + repr(jsonString) + "\n")
 
-        if 'Error' in parsed: # If Groq returned an error...
+        if 'Error' in parsed and parsed["Error"] != "service_unavailable": # If Groq returned an error...
             print("Groq returned an error while attempting to validate searchInput\n")
             if parsed["Error"] == "invalid_input": # Groq couldn't match the input to a real world location
-                error = "We could not match your input to a valid location. Please try again using city, state (if applicable), and country."
-            elif parsed["Error"] == "service_unavailable": # Groq was down, timed out, or some other networking issue
-                error = "There was a problem with our input validation service. Please try again in a few moments."
+                error = "We could not match your input to a valid location. Please try again using city, state (if applicable), and country separate by comma."
             else:
                 error = "An unexpected error occurred."
+        elif 'Error' in parsed and parsed["Error"] == "service_unavailable": # Groq was down, timed out, or some other networking issue
+            print("Groq unavailable, now parsing raw input directly")
+            user_input_processing = request.args.get("searchInput").split(",")
+            if len(user_input_processing) >=3:
+                parsed = {}
+                parsed['city'] = user_input_processing[0].strip()
+                parsed['state'] = user_input_processing[1].strip()
+                parsed['country'] = user_input_processing[2].strip()
+                lat, lon = get_lat_long(parsed['city'], parsed['state'], parsed['country'], OWM_API_KEY) # Get lat/lon through OWM API 
+            else:
+                lat = lon = None
+            if lat is not None and lon is not None:
+                parsed_city = parsed['city'].title()
+                parsed_state = parsed['state'].title()
+                parsed_country = parsed['country'].title()
+                print(f"raw searchInput successfully validated\n"
+                    f"  parsed_city: '{parsed_city}'\n" 
+                    f"  parsed_sate: '{parsed_state}'\n" 
+                    f"  parsed_country: '{parsed_country}'\n")
+
+                if ( # Only update the cache data if the user's input is valid
+                    parsed_city != cached_data['city'] or
+                    parsed_state != cached_data['state'] or
+                    parsed_country != cached_data['country']
+                ):
+                    print("New data detected. Updating cached data...\n")
+                    city = cached_data['city'] = parsed_city
+                    state = cached_data['state'] = parsed_state
+                    country = cached_data['country'] = parsed_country
+                    cached_data['current'] = None  # Invalidate the old data
+                    cached_data['forecast'] = None
+                    print(f"Cached data updated.\n" 
+                        f"  city: '{city}'\n"
+                        f"  state: '{state}'\n" 
+                        f"  country: '{country}'\n")
+                else: # User submitted the same location, reuse existing data
+                    print("Using previously cached data for City/State/Country\n")
+                    city = cached_data['city']
+                    state = cached_data['state']
+                    country = cached_data['country']
+            else:
+                error = "We could not match your input to a valid location. Please try again using city, state (if applicable), and country separate by comma."
+        
         else: # Load the results for City, State, and Country from Groq
+
+            
+            #error = "There was a problem with our input validation service. Please try again in a few moments."
+
             parsed_city = parsed['city'].title()
             parsed_state = parsed['state'].title()
             parsed_country = parsed['country'].title()
@@ -79,7 +126,7 @@ def show_weather():
                   f"  parsed_sate: '{parsed_state}'\n" 
                   f"  parsed_country: '{parsed_country}'\n")
 
-            if ( # Only update the cache data if the user's input is different
+            if ( # Only update the cache data if the user's input is valid
                 parsed_city != cached_data['city'] or
                 parsed_state != cached_data['state'] or
                 parsed_country != cached_data['country']
@@ -134,31 +181,38 @@ def show_weather():
             cached_data['timezone'] = cached_data['current'].timezone
             #cached_data['timezone'] = pytz.timezone(timezone_str)
 
-    current = cached_data['current']
-    forecast = cached_data['forecast']
+        current = cached_data['current']
+        forecast = cached_data['forecast']
 
+        if(current and forecast):
+            highTempData  = dict_creator(forecast.dates, forecast.temps_max)
+            lowTempData  = dict_creator(forecast.dates, forecast.temps_min)
+            avgTempData = dict_creator(forecast.dates, average_data(forecast.temps_max, forecast.temps_min))
+            print(f"High Temps: {highTempData}")
+            print(f"Low Temps:  {lowTempData}")
+            print(f"Avg Temps:  {avgTempData}\n")
 
-    highTempData  = dict_creator(forecast.dates, forecast.temps_max)
-    lowTempData  = dict_creator(forecast.dates, forecast.temps_min)
-    avgTempData = dict_creator(forecast.dates, average_data(forecast.temps_max, forecast.temps_min))
-    print(f"High Temps: {highTempData}")
-    print(f"Low Temps:  {lowTempData}")
-    print(f"Avg Temps:  {avgTempData}\n")
-
-    t0 = time.perf_counter()
-    graph_generator(avgTempData, highTempData, lowTempData, "F")
-    t1 = time.perf_counter()
-    print(f"  F graph took {(t1-t0)*1000:.2f} ms")
-    
-    t0 = time.perf_counter()
-    graph_generator(
-        celsius_dict(avgTempData),
-        celsius_dict(highTempData),
-        celsius_dict(lowTempData),
-        "C"
-    )
-    t1 = time.perf_counter()
-    print(f"  C graph took {(t1-t0)*1000:.2f} ms\n")
+            t0 = time.perf_counter()
+            graph_generator(avgTempData, highTempData, lowTempData, "F")
+            t1 = time.perf_counter()
+            print(f"  F graph took {(t1-t0)*1000:.2f} ms")
+        
+            t0 = time.perf_counter()
+            graph_generator(
+                celsius_dict(avgTempData),
+                celsius_dict(highTempData),
+                celsius_dict(lowTempData),
+                "C"
+            )
+            t1 = time.perf_counter()
+            print(f"  C graph took {(t1-t0)*1000:.2f} ms\n")
+            t1_total = time.perf_counter()
+        
+        img_code = list(weather_code_desc.keys())[list(weather_code_desc.values()).index(current.description)]
+        
+        add_search(search_cache, {'city': city, 'state' : state, 'country' :country, 'img_code': img_code})
+        clean_search_cache(search_cache)
+        print(search_cache)
 
     #graph_generator_interactive(avgTempData,highTempData,lowTempData)
 
@@ -166,15 +220,10 @@ def show_weather():
     local_time = cached_data['timezone']
     print(f"Timezone: {cached_data['timezone']}\n")
     # print(f"Local time in {city}: {local_time}\n")
-    
     t1_total = time.perf_counter()
     print(f"show_weather() took {(t1_total - t0_total) * 1000:.2f} ms\n")
-    img_code = list(weather_code_desc.keys())[list(weather_code_desc.values()).index(current.description)]
-    
-    add_search(search_cache, {'city': city, 'state' : state, 'country' :country, 'img_code': img_code})
-    clean_search_cache(search_cache)
-    print(search_cache)
     # Render the page template (Flask uses Jinja2)
+    print(current)
     return render_template(
       "index.html",
       city = city,
