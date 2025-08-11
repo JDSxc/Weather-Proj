@@ -44,7 +44,7 @@ pip install -r requirements.txt
 Create a .env file in the project root:
 ```
 OWM_API_KEY=your_openweathermap_key
-GROQ_API_KEY=your_groq_api_key
+GROQ_API_KEY=your_groq_api_key (optional)
 ```
 ### 5. Run the application locally
 
