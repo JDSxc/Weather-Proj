@@ -8,7 +8,7 @@
 
 ## 🔗 Live Demo & Source Code
 
-- 🌐 **Live App:** [https://elegant-canto-467120-n6.uc.r.appspot.com/](https://elegant-canto-467120-n6.uc.r.appspot.com/)
+- 🌐 **Live App:** [https://elegant-canto-467120-n6.uc.r.appspot.com/](https://elegant-canto-467120-n6.uc.r.appspot.com/) (no longer working)
 - 📂 **GitHub Repository:** [https://github.com/JDSxc/Weather-Proj](https://github.com/JDSxc/Weather-Proj)
 
 ---
