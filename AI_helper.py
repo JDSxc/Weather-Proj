@@ -7,7 +7,7 @@ GROQ_API_KEY = get_api_key("GROQ_API_KEY")
 
 def groqValidateInput(prompt):
     url = "https://api.groq.com/openai/v1/chat/completions"
-    model="llama3-70b-8192"
+    model="llama-3.3-70b-versatile"
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
         "Content-Type": "application/json"
